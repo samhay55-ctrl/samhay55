@@ -1,0 +1,124 @@
+@import 'tailwindcss';
+
+/* ---- Livingway design tokens ---- */
+@theme {
+  --font-serif: 'Cormorant Garamond', ui-serif, Georgia, serif;
+  --font-sans: 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;
+
+  /* Surfaces */
+  --color-cream: #f3eee6; /* app background */
+  --color-cream-100: #fbf8f3; /* raised cards */
+  --color-ink: #2b2825; /* primary text / dark surface */
+  --color-ink-900: #15120f; /* bezel */
+
+  /* Accent */
+  --color-clay: #9f6f4f; /* terracotta accent */
+  --color-clay-soft: #fbf4ec; /* selected tint */
+  --color-clay-deep: #a8694f; /* alerts / urgency */
+
+  /* Neutrals */
+  --color-stone: #847c72;
+  --color-stone-2: #5c544b;
+  --color-stone-3: #9a8f7f;
+  --color-mist: #a89e8e;
+  --color-mist-2: #b0a492;
+  --color-line: #e9e1d4;
+  --color-line-2: #e2d9cb;
+  --color-line-3: #ede5d8;
+  --color-line-4: #e4dbcd;
+  --color-sage: #7e876e; /* confirmation check */
+  --color-sage-bg: #e7e9df;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* ---- Motion (ported verbatim from the design) ---- */
+@keyframes lwFade {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes lwSheet {
+  from {
+    transform: translateY(101%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+@keyframes lwScrim {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes lwPop {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  65% {
+    transform: scale(1.06);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+@keyframes lwToast {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 12px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+.lw-fade {
+  animation: lwFade 0.42s ease both;
+}
+.lw-sheet {
+  animation: lwSheet 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.lw-scrim {
+  animation: lwScrim 0.3s ease both;
+}
+.lw-pop {
+  animation: lwPop 0.55s cubic-bezier(0.22, 1.4, 0.4, 1) both;
+}
+.lw-toast {
+  animation: lwToast 0.3s ease both;
+}
+
+/* Hidden scrollbars for the in-app scroll regions */
+.lwscroll {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.lwscroll::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
