@@ -1,12 +1,13 @@
 import { useApp } from './store.jsx'
-import { classImg, spaceImg, ph, priceText, spotsText, spotsColor } from './data.js'
+import { classImg, spaceImg, ph, imgStyle, priceText, spotsText, spotsColor } from './data.js'
 
-const HERO = ph('#C4B196', '#7C6247')
+const HERO_FALLBACK = ph('#C4B196', '#7C6247')
 
 export default function Home() {
-  const { actions, classes, spaces } = useApp()
+  const { actions, classes, spaces, settings } = useApp()
   const todaysClasses = classes.filter((c) => c.day === 'Today')
   const featuredSpaces = spaces.slice(0, 2)
+  const HERO = settings?.hero_image_url ? imgStyle(settings.hero_image_url) : HERO_FALLBACK
 
   return (
     <div className="lw-fade pb-[108px]">

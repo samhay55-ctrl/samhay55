@@ -27,6 +27,7 @@ export function AppProvider({ children }) {
     // Live content (loaded from Supabase, falls back to bundled data)
     classes: [],
     spaces: [],
+    settings: {},
     loading: true,
   })
 
@@ -40,19 +41,23 @@ export function AppProvider({ children }) {
     ;(async () => {
       try {
         // If Supabase is slow or unreachable, fall back rather than hang.
-        const [c, s] = await Promise.race([
+        const [c, s, st] = await Promise.race([
           Promise.all([
             supabase.from('classes').select('*').order('sort_order'),
             supabase.from('spaces').select('*').order('sort_order'),
+            supabase.from('settings').select('*'),
           ]),
           timeout(6000),
         ])
         if (cancelled) return
         const classes = c.error || !c.data?.length ? FALLBACK_CLASSES : c.data.map(rowToClass)
         const spaces = s.error || !s.data?.length ? FALLBACK_SPACES : s.data.map(rowToSpace)
-        patch({ classes, spaces, loading: false })
+        const settings =
+          st.error || !st.data ? {} : Object.fromEntries(st.data.map((r) => [r.key, r.value]))
+        patch({ classes, spaces, settings, loading: false })
       } catch {
-        if (!cancelled) patch({ classes: FALLBACK_CLASSES, spaces: FALLBACK_SPACES, loading: false })
+        if (!cancelled)
+          patch({ classes: FALLBACK_CLASSES, spaces: FALLBACK_SPACES, settings: {}, loading: false })
       }
     })()
     return () => {
@@ -164,6 +169,7 @@ export function AppProvider({ children }) {
       actions,
       classes: state.classes,
       spaces: state.spaces,
+      settings: state.settings,
       loading: state.loading,
       classById,
       spaceById,
