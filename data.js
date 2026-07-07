@@ -253,13 +253,26 @@ export const ph = (a, b) => ({
 
 export const catOf = (type) => CAT[type] || CAT.Yoga
 
-// Background wash for a class card, keyed on its category palette.
+// A real photo background (used when a class/space has an image_url set).
+export const imgStyle = (url) => ({
+  backgroundImage: `url('${url}')`,
+  backgroundSize: 'cover',
+  backgroundPosition: 'center',
+  backgroundRepeat: 'no-repeat',
+})
+
+// Background for a class card: the photo if one is set, otherwise a soft
+// wash keyed on its category palette.
 export const classImg = (c) => {
+  if (c?.image_url) return imgStyle(c.image_url)
   const meta = catOf(c.type)
   return ph(meta.a, meta.b)
 }
 
-export const spaceImg = (s) => ph(s.a, s.b)
+export const spaceImg = (s) => {
+  if (s?.image_url) return imgStyle(s.image_url)
+  return ph(s.a, s.b)
+}
 
 export const priceText = (n) => '£' + n
 export const spotsText = (spots) => spots + ' ' + (spots === 1 ? 'place' : 'places') + ' left'

@@ -24,6 +24,7 @@ export const rowToClass = (r) => ({
   level: r.level,
   desc: r.description,
   bring: r.bring || [],
+  image_url: r.image_url || null,
 })
 
 // Map a Supabase `spaces` row to the app's shape.
@@ -37,4 +38,5 @@ export const rowToSpace = (r) => ({
   b: r.color_b,
   desc: r.description,
   amenities: r.amenities || [],
+  image_url: r.image_url || null,
 })
