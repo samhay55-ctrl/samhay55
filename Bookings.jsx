@@ -1,27 +1,27 @@
 import { useApp } from './store.jsx'
-import { classById, spaceById, catOf, classImg, spaceImg } from './data.js'
-
-// Resolve a booking record into displayable fields.
-function mapBooking(bk) {
-  const isClass = bk.kind === 'class'
-  const item = isClass ? classById(bk.ref) : spaceById(bk.ref)
-  if (!item) return null
-  return {
-    id: bk.id,
-    title: isClass ? item.title : item.name,
-    scheme: item.scheme,
-    date: bk.date,
-    time: bk.time,
-    kindLabel: isClass ? item.type.toUpperCase() : 'SPACE',
-    accent: isClass ? catOf(item.type).accent : '#9F6F4F',
-    img: isClass ? classImg(item) : spaceImg(item),
-    isClass,
-    itemId: item.id,
-  }
-}
+import { catOf, classImg, spaceImg } from './data.js'
 
 export default function Bookings() {
-  const { state, actions } = useApp()
+  const { state, actions, classById, spaceById } = useApp()
+
+  // Resolve a booking record into displayable fields.
+  const mapBooking = (bk) => {
+    const isClass = bk.kind === 'class'
+    const item = isClass ? classById(bk.ref) : spaceById(bk.ref)
+    if (!item) return null
+    return {
+      id: bk.id,
+      title: isClass ? item.title : item.name,
+      scheme: item.scheme,
+      date: bk.date,
+      time: bk.time,
+      kindLabel: isClass ? item.type.toUpperCase() : 'SPACE',
+      accent: isClass ? catOf(item.type).accent : '#9F6F4F',
+      img: isClass ? classImg(item) : spaceImg(item),
+      isClass,
+      itemId: item.id,
+    }
+  }
 
   const upcoming = state.bookings.filter((b) => b.status === 'upcoming').map(mapBooking).filter(Boolean)
   const past = state.bookings.filter((b) => b.status === 'past').map(mapBooking).filter(Boolean)

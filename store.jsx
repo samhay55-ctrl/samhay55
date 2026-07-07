@@ -1,5 +1,6 @@
-import { createContext, useCallback, useContext, useMemo, useRef, useState } from 'react'
-import { classById } from './data.js'
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
+import { supabase, rowToClass, rowToSpace } from './supabase.js'
+import { FALLBACK_CLASSES, FALLBACK_SPACES } from './data.js'
 
 const AppContext = createContext(null)
 
@@ -23,9 +24,41 @@ export function AppProvider({ children }) {
     tier: 'Wellness Pass',
     bookings: INITIAL_BOOKINGS,
     toast: null,
+    // Live content (loaded from Supabase, falls back to bundled data)
+    classes: [],
+    spaces: [],
+    loading: true,
   })
 
   const patch = useCallback((p) => setState((s) => ({ ...s, ...p })), [])
+
+  // ---- Load classes & spaces from Supabase (with a graceful fallback) ----
+  useEffect(() => {
+    let cancelled = false
+    const timeout = (ms) =>
+      new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), ms))
+    ;(async () => {
+      try {
+        // If Supabase is slow or unreachable, fall back rather than hang.
+        const [c, s] = await Promise.race([
+          Promise.all([
+            supabase.from('classes').select('*').order('sort_order'),
+            supabase.from('spaces').select('*').order('sort_order'),
+          ]),
+          timeout(6000),
+        ])
+        if (cancelled) return
+        const classes = c.error || !c.data?.length ? FALLBACK_CLASSES : c.data.map(rowToClass)
+        const spaces = s.error || !s.data?.length ? FALLBACK_SPACES : s.data.map(rowToSpace)
+        patch({ classes, spaces, loading: false })
+      } catch {
+        if (!cancelled) patch({ classes: FALLBACK_CLASSES, spaces: FALLBACK_SPACES, loading: false })
+      }
+    })()
+    return () => {
+      cancelled = true
+    }
+  }, [patch])
 
   const toastTimer = useRef(null)
   const showToast = useCallback((msg) => {
@@ -81,7 +114,8 @@ export function AppProvider({ children }) {
         setState((s) => {
           const b = s.booking
           if (!b) return s
-          const c = classById(b.classId)
+          const c = s.classes.find((x) => x.id === b.classId)
+          if (!c) return s
           const nb = {
             id: 'u' + Math.random().toString(36).slice(2),
             kind: 'class',
@@ -122,7 +156,20 @@ export function AppProvider({ children }) {
     }
   }, [patch, showToast])
 
-  const value = useMemo(() => ({ state, actions }), [state, actions])
+  const value = useMemo(() => {
+    const classById = (id) => state.classes.find((c) => c.id === id)
+    const spaceById = (id) => state.spaces.find((s) => s.id === id)
+    return {
+      state,
+      actions,
+      classes: state.classes,
+      spaces: state.spaces,
+      loading: state.loading,
+      classById,
+      spaceById,
+    }
+  }, [state, actions])
+
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>
 }
 

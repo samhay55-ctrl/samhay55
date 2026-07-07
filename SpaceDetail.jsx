@@ -1,8 +1,8 @@
 import { useApp } from './store.jsx'
-import { spaceById, spaceImg, priceText } from './data.js'
+import { spaceImg, priceText } from './data.js'
 
 export default function SpaceDetail() {
-  const { state, actions } = useApp()
+  const { state, actions, spaceById } = useApp()
   const s = spaceById(state.selectedSpaceId)
   if (!s) return null
 

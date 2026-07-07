@@ -1,12 +1,13 @@
 import { useApp } from './store.jsx'
-import { classById, classImg, priceText } from './data.js'
+import { classImg, priceText } from './data.js'
 
 export default function BookingSheet() {
-  const { state, actions } = useApp()
+  const { state, actions, classById } = useApp()
   const b = state.booking
   if (!b) return null
 
   const c = classById(b.classId)
+  if (!c) return null
   const canCredit = state.credits > 0
   const plan = b.plan
   const total = plan === 'credit' && canCredit ? 0 : c.price

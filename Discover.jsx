@@ -1,17 +1,10 @@
 import { useApp } from './store.jsx'
-import {
-  CLASSES,
-  TYPE_FILTERS,
-  classImg,
-  priceText,
-  spotsText,
-  spotsColor,
-} from './data.js'
+import { TYPE_FILTERS, classImg, priceText, spotsText, spotsColor } from './data.js'
 
 export default function Discover() {
-  const { state, actions } = useApp()
+  const { state, actions, classes } = useApp()
 
-  const filtered = CLASSES.filter(
+  const filtered = classes.filter(
     (c) =>
       (state.filterType === 'All' || c.type === state.filterType) &&
       (state.filterLoc === 'All' || c.scheme === state.filterLoc),

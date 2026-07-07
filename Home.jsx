@@ -1,21 +1,12 @@
 import { useApp } from './store.jsx'
-import {
-  CLASSES,
-  SPACES,
-  classImg,
-  spaceImg,
-  ph,
-  priceText,
-  spotsText,
-  spotsColor,
-} from './data.js'
+import { classImg, spaceImg, ph, priceText, spotsText, spotsColor } from './data.js'
 
 const HERO = ph('#C4B196', '#7C6247')
 
 export default function Home() {
-  const { actions } = useApp()
-  const todaysClasses = CLASSES.filter((c) => c.day === 'Today')
-  const featuredSpaces = SPACES.slice(0, 2)
+  const { actions, classes, spaces } = useApp()
+  const todaysClasses = classes.filter((c) => c.day === 'Today')
+  const featuredSpaces = spaces.slice(0, 2)
 
   return (
     <div className="lw-fade pb-[108px]">

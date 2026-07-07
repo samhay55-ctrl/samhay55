@@ -24,7 +24,9 @@ export const ADDR = {
   Upperbanks: 'Rochdale · OL16',
 }
 
-export const CLASSES = [
+// Used only as a fallback if the Supabase fetch fails or returns nothing —
+// the live data comes from your Supabase database (see src/supabase.js).
+export const FALLBACK_CLASSES = [
   {
     id: 1,
     type: 'Yoga',
@@ -147,7 +149,7 @@ export const CLASSES = [
   },
 ]
 
-export const SPACES = [
+export const FALLBACK_SPACES = [
   {
     id: 's1',
     name: 'Yoga Suite',
@@ -248,9 +250,6 @@ export const ph = (a, b) => ({
   backgroundImage: `repeating-linear-gradient(135deg,rgba(0,0,0,.022) 0 17px,rgba(255,255,255,.05) 17px 34px),linear-gradient(155deg,${a},${b})`,
   backgroundSize: 'cover',
 })
-
-export const classById = (id) => CLASSES.find((c) => c.id === id)
-export const spaceById = (id) => SPACES.find((s) => s.id === id)
 
 export const catOf = (type) => CAT[type] || CAT.Yoga
 

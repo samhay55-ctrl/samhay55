@@ -1,11 +1,11 @@
 import { useApp } from './store.jsx'
-import { classById, spaceById, priceText } from './data.js'
+import { priceText } from './data.js'
 
 // The class/space detail screens have a sticky action bar pinned to the bottom
 // of the frame (above the tab bar). It lives here — outside the scroll area —
 // so it stays fixed while the detail content scrolls beneath it.
 export default function StickyBar() {
-  const { state, actions } = useApp()
+  const { state, actions, classById, spaceById } = useApp()
 
   let content = null
 

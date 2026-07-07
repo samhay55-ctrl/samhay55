@@ -1,10 +1,10 @@
 import { useApp } from './store.jsx'
-import { classById, catOf, classImg, ph, ADDR } from './data.js'
+import { catOf, classImg, ph, ADDR } from './data.js'
 
 const MAP_BG = ph('#E2DCCF', '#D2C9B8')
 
 export default function ClassDetail() {
-  const { state, actions } = useApp()
+  const { state, actions, classById } = useApp()
   const c = classById(state.selectedClassId)
   if (!c) return null
   const meta = catOf(c.type)

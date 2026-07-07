@@ -1,8 +1,8 @@
 import { useApp } from './store.jsx'
-import { SPACES, spaceImg, priceText } from './data.js'
+import { spaceImg, priceText } from './data.js'
 
 export default function Spaces() {
-  const { actions } = useApp()
+  const { actions, spaces } = useApp()
 
   return (
     <div className="lw-fade pt-[18px] pb-[110px]">
@@ -15,7 +15,7 @@ export default function Spaces() {
       </div>
 
       <div className="flex flex-col gap-[22px] px-[22px] pt-6">
-        {SPACES.map((s) => (
+        {spaces.map((s) => (
           <div key={s.id} onClick={() => actions.openSpace(s.id, 'spaces')} className="cursor-pointer">
             <div className="relative h-[200px] overflow-hidden rounded-[20px]" style={spaceImg(s)}>
               <span
