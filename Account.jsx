@@ -4,7 +4,13 @@ import { ph } from './data.js'
 const AVATAR = ph('#DCE0D1', '#CDD3BF')
 
 export default function Account() {
-  const { state, actions } = useApp()
+  const { state, actions, settings } = useApp()
+
+  // Contact details are editable in Supabase (settings table); these are fallbacks.
+  const email = settings?.contact_email || 'hello@livingway.co'
+  const phone = settings?.contact_phone || ''
+  const hours = settings?.contact_hours || 'We usually reply within a day'
+  const houses = settings?.houses || 'Roco · Spot · Duke · Upperbanks'
 
   const accountRows = [
     {
@@ -19,13 +25,13 @@ export default function Account() {
     },
     {
       label: 'Your houses',
-      sub: 'Roco · Spot · Duke · Upperbanks',
+      sub: houses,
       tap: () => actions.go('spaces'),
     },
     {
       label: 'Help & contact',
-      sub: 'We usually reply within a day',
-      tap: () => actions.showToast('hello@livingway.co'),
+      sub: `${email}${phone ? ' · ' + phone : ''}`,
+      tap: () => actions.showToast(hours + ' · ' + email),
     },
   ]
 
