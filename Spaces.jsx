@@ -2,15 +2,20 @@ import { useApp } from './store.jsx'
 import { spaceImg, priceText } from './data.js'
 
 export default function Spaces() {
-  const { actions, spaces } = useApp()
+  const { actions, spaces, settings } = useApp()
+  const t = (k, d) => settings?.[k] || d
 
   return (
     <div className="lw-fade pt-[18px] pb-[110px]">
       <div className="px-[22px]">
-        <div className="text-[11px] font-semibold tracking-[.32em] text-clay">SPACES</div>
-        <h1 className="mt-2 font-serif text-[38px] font-medium leading-none">Room to practise</h1>
+        <div className="text-[11px] font-semibold tracking-[.32em] text-clay">
+          {t('spaces_eyebrow', 'SPACES')}
+        </div>
+        <h1 className="mt-2 font-serif text-[38px] font-medium leading-none">
+          {t('spaces_title', 'Room to practise')}
+        </h1>
         <p className="mt-3 text-[13.5px] font-light text-stone" style={{ lineHeight: 1.55 }}>
-          Bookable spaces for solo sessions, small groups and workshops.
+          {t('spaces_subtitle', 'Bookable spaces for solo sessions, small groups and workshops.')}
         </p>
       </div>
 

@@ -2,7 +2,8 @@ import { useApp } from './store.jsx'
 import { catOf, classImg, spaceImg } from './data.js'
 
 export default function Bookings() {
-  const { state, actions, classById, spaceById } = useApp()
+  const { state, actions, classById, spaceById, settings } = useApp()
+  const t = (k, d) => settings?.[k] || d
 
   // Resolve a booking record into displayable fields.
   const mapBooking = (bk) => {
@@ -31,8 +32,12 @@ export default function Bookings() {
 
   return (
     <div className="lw-fade px-[22px] pt-[18px] pb-[110px]">
-      <div className="text-[11px] font-semibold tracking-[.32em] text-clay">YOUR JOURNEY</div>
-      <h1 className="mt-2 font-serif text-[38px] font-medium leading-none">My bookings</h1>
+      <div className="text-[11px] font-semibold tracking-[.32em] text-clay">
+        {t('bookings_eyebrow', 'YOUR JOURNEY')}
+      </div>
+      <h1 className="mt-2 font-serif text-[38px] font-medium leading-none">
+        {t('bookings_title', 'My bookings')}
+      </h1>
 
       {/* Upcoming */}
       <h3 className="mt-[30px] text-[12px] font-semibold tracking-[.16em]">UPCOMING</h3>
@@ -80,7 +85,9 @@ export default function Bookings() {
           className="mt-3.5 rounded-[18px] p-[30px] text-center"
           style={{ border: '1px dashed #D8CEBE' }}
         >
-          <p className="m-0 font-serif text-[20px] italic text-stone">Nothing booked yet.</p>
+          <p className="m-0 font-serif text-[20px] italic text-stone">
+            {t('bookings_empty', 'Nothing booked yet.')}
+          </p>
           <button
             onClick={() => actions.go('discover')}
             className="mt-3.5 cursor-pointer rounded-[30px] border-none px-[22px] py-3 font-sans text-[13px] font-semibold"

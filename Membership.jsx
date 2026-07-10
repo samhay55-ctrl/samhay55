@@ -2,7 +2,8 @@ import { useApp } from './store.jsx'
 import { TIERS } from './data.js'
 
 export default function Membership() {
-  const { state, actions } = useApp()
+  const { state, actions, settings } = useApp()
+  const t = (k, d) => settings?.[k] || d
 
   return (
     <div className="lw-fade px-[22px] pt-[18px] pb-[110px]">
@@ -12,9 +13,11 @@ export default function Membership() {
       >
         ← You
       </button>
-      <h1 className="mt-4 font-serif text-[38px] font-medium leading-[1.02]">Choose how you join</h1>
+      <h1 className="mt-4 font-serif text-[38px] font-medium leading-[1.02]">
+        {t('membership_title', 'Choose how you join')}
+      </h1>
       <p className="mt-3 text-[14px] font-light text-stone" style={{ lineHeight: 1.55 }}>
-        No lock-in. Change or pause whenever your practice shifts.
+        {t('membership_subtitle', 'No lock-in. Change or pause whenever your practice shifts.')}
       </p>
 
       <div className="mt-[26px] flex flex-col gap-4">

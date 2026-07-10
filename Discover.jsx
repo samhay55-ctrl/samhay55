@@ -2,7 +2,8 @@ import { useApp } from './store.jsx'
 import { TYPE_FILTERS, classImg, priceText, spotsText, spotsColor } from './data.js'
 
 export default function Discover() {
-  const { state, actions, classes } = useApp()
+  const { state, actions, classes, settings } = useApp()
+  const t = (k, d) => settings?.[k] || d
 
   const filtered = classes.filter(
     (c) =>
@@ -14,8 +15,12 @@ export default function Discover() {
   return (
     <div className="lw-fade pt-[18px] pb-[110px]">
       <div className="px-[22px]">
-        <div className="text-[11px] font-semibold tracking-[.32em] text-clay">DISCOVER</div>
-        <h1 className="mt-2 font-serif text-[38px] font-medium leading-none">Find your class</h1>
+        <div className="text-[11px] font-semibold tracking-[.32em] text-clay">
+          {t('discover_eyebrow', 'DISCOVER')}
+        </div>
+        <h1 className="mt-2 font-serif text-[38px] font-medium leading-none">
+          {t('discover_title', 'Find your class')}
+        </h1>
       </div>
 
       {/* Type filters */}

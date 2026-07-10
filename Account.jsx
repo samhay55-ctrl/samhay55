@@ -5,6 +5,7 @@ const AVATAR = ph('#DCE0D1', '#CDD3BF')
 
 export default function Account() {
   const { state, actions, settings } = useApp()
+  const t = (k, d) => settings?.[k] || d
 
   // Contact details are editable in Supabase (settings table); these are fallbacks.
   const email = settings?.contact_email || 'hello@livingway.co'
@@ -42,8 +43,12 @@ export default function Account() {
       <div className="mt-3.5 flex items-center gap-4">
         <div className="h-16 w-16 flex-none rounded-full" style={AVATAR} />
         <div>
-          <h1 className="m-0 font-serif text-[30px] font-medium leading-none">Eleanor Hart</h1>
-          <div className="mt-[3px] text-[12.5px] text-stone">Member since 2024</div>
+          <h1 className="m-0 font-serif text-[30px] font-medium leading-none">
+            {t('member_name', 'Eleanor Hart')}
+          </h1>
+          <div className="mt-[3px] text-[12.5px] text-stone">
+            {t('member_since', 'Member since 2024')}
+          </div>
         </div>
       </div>
 
@@ -103,7 +108,7 @@ export default function Account() {
 
       <div className="mt-[30px] text-center">
         <div className="font-serif text-[18px] italic" style={{ color: '#B0A492' }}>
-          Live how you love.
+          {t('account_tagline', 'Live how you love.')}
         </div>
       </div>
     </div>

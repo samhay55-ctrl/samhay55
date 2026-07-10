@@ -2,7 +2,8 @@ import { useApp } from './store.jsx'
 import { classImg, priceText } from './data.js'
 
 export default function BookingSheet() {
-  const { state, actions, classById } = useApp()
+  const { state, actions, classById, settings } = useApp()
+  const t = (k, d) => settings?.[k] || d
   const b = state.booking
   if (!b) return null
 
@@ -157,7 +158,9 @@ export default function BookingSheet() {
                 ✓
               </span>
             </div>
-            <h2 className="mt-[22px] font-serif text-[30px] font-medium leading-[1.05]">You&rsquo;re booked in</h2>
+            <h2 className="mt-[22px] font-serif text-[30px] font-medium leading-[1.05]">
+              {t('booking_confirm_title', 'You’re booked in')}
+            </h2>
             <p className="mt-3 text-[14px] font-light" style={{ lineHeight: 1.55, color: '#5C544B' }}>
               We&rsquo;ve saved your place for
               <br />
@@ -166,7 +169,7 @@ export default function BookingSheet() {
               {c.day} · {c.time} · {c.scheme}
             </p>
             <p className="mt-4 font-serif text-[17px] italic text-clay">
-              Arrive a few minutes early and breathe.
+              {t('booking_confirm_saying', 'Arrive a few minutes early and breathe.')}
             </p>
             <button
               onClick={actions.finishBooking}

@@ -5,6 +5,7 @@ const HERO_FALLBACK = ph('#C4B196', '#7C6247')
 
 export default function Home() {
   const { actions, classes, spaces, settings } = useApp()
+  const t = (k, d) => settings?.[k] || d
   const todaysClasses = classes.filter((c) => c.day === 'Today')
   const featuredSpaces = spaces.slice(0, 2)
   const HERO = settings?.hero_image_url ? imgStyle(settings.hero_image_url) : HERO_FALLBACK
@@ -25,7 +26,7 @@ export default function Home() {
             className="text-[11px] font-medium tracking-[.42em]"
             style={{ color: 'rgba(255,255,255,.82)' }}
           >
-            LIVINGWAY&nbsp;&nbsp;WELLNESS
+            {t('home_eyebrow', 'LIVINGWAY  WELLNESS')}
           </div>
         </div>
         <div className="absolute right-0 bottom-10 left-0 px-[30px]" style={{ color: '#FBF8F3' }}>
@@ -33,13 +34,13 @@ export default function Home() {
             className="font-serif text-[52px] font-medium"
             style={{ lineHeight: '.96', letterSpacing: '.005em', textWrap: 'balance' }}
           >
-            LIVE HOW YOU LOVE
+            {t('home_title', 'LIVE HOW YOU LOVE')}
           </div>
           <p
             className="mt-4 max-w-[300px] text-[14.5px] font-light"
             style={{ lineHeight: 1.55, color: 'rgba(251,248,243,.86)' }}
           >
-            A quiet place to move, breathe and gather.
+            {t('home_subtitle', 'A quiet place to move, breathe and gather.')}
           </p>
         </div>
       </div>
@@ -48,7 +49,7 @@ export default function Home() {
       <div className="px-[22px] pt-[30px]">
         <div className="flex items-baseline justify-between">
           <h2 className="m-0 font-serif text-[28px] font-medium tracking-[.01em]">
-            Today at Livingway
+            {t('home_today_heading', 'Today at Livingway')}
           </h2>
           <button
             onClick={() => actions.go('discover')}
@@ -108,21 +109,22 @@ export default function Home() {
           className="text-[10px] font-medium tracking-[.34em]"
           style={{ color: 'rgba(243,238,230,.6)' }}
         >
-          OUR PROMISE
+          {t('promise_eyebrow', 'OUR PROMISE')}
         </div>
         <p
           className="mt-[18px] font-serif text-[25px] font-normal italic"
           style={{ lineHeight: 1.34, textWrap: 'balance' }}
         >
-          &ldquo;Wellness shouldn&rsquo;t feel like another thing to get through. Come as you are,
-          leave a little lighter.&rdquo;
+          &ldquo;{t('promise_quote', 'Wellness shouldn’t feel like another thing to get through. Come as you are, leave a little lighter.')}&rdquo;
         </p>
       </div>
 
       {/* Spaces to gather */}
       <div className="px-[22px] pt-[34px]">
         <div className="flex items-baseline justify-between">
-          <h2 className="m-0 font-serif text-[28px] font-medium">Spaces to gather</h2>
+          <h2 className="m-0 font-serif text-[28px] font-medium">
+            {t('spaces_home_heading', 'Spaces to gather')}
+          </h2>
           <button
             onClick={() => actions.go('spaces')}
             className="cursor-pointer border-none bg-transparent font-sans text-[12px] font-semibold tracking-[.06em] text-clay"
@@ -131,7 +133,7 @@ export default function Home() {
           </button>
         </div>
         <p className="mt-2 text-[13.5px] font-light text-stone" style={{ lineHeight: 1.5 }}>
-          Book a studio by the hour for your own practice, workshop or gathering.
+          {t('spaces_home_subtitle', 'Book a studio by the hour for your own practice, workshop or gathering.')}
         </p>
       </div>
       <div className="flex flex-col gap-3.5 px-[22px] pt-[18px]">
@@ -163,10 +165,10 @@ export default function Home() {
       {/* Footer */}
       <div className="px-[30px] pt-10 pb-3.5 text-center">
         <div className="font-serif text-[13px] tracking-[.3em]" style={{ color: '#B0A492' }}>
-          LIVINGWAY
+          {t('footer_name', 'LIVINGWAY')}
         </div>
         <div className="mt-1.5 text-[11px] tracking-[.04em]" style={{ color: '#A89E8E' }}>
-          Roco
+          {t('footer_tagline', 'Roco')}
         </div>
       </div>
     </div>
