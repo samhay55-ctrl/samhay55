@@ -13,11 +13,12 @@ export default function TabBar() {
 
   return (
     <div
-      className="z-[6] flex h-[78px] flex-none items-start px-2.5 pt-3.5"
+      className="z-[6] flex min-h-[78px] flex-none items-start px-2.5 pt-3.5"
       style={{
         background: 'rgba(243,238,230,.94)',
         backdropFilter: 'blur(12px)',
         borderTop: '1px solid #E4DBCD',
+        paddingBottom: 'env(safe-area-inset-bottom)',
       }}
     >
       {TABS.map((t) => {

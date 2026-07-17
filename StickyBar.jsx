@@ -37,7 +37,8 @@ export default function StickyBar() {
     <div
       className="absolute right-0 left-0 z-[7] flex items-center gap-3.5 px-5 pt-[18px] pb-[22px]"
       style={{
-        bottom: 78, // sit directly above the 78px tab bar
+        // sit directly above the tab bar (78px + the phone's bottom safe area)
+        bottom: 'calc(78px + env(safe-area-inset-bottom))',
         background: 'linear-gradient(180deg,rgba(243,238,230,0),#F3EEE6 26%)',
       }}
     >

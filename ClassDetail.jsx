@@ -12,7 +12,10 @@ export default function ClassDetail() {
   return (
     <div className="lw-fade pb-[120px]">
         {/* Hero */}
-        <div className="relative -mt-[50px] h-[340px]" style={classImg(c)}>
+        <div
+          className="relative h-[340px]"
+          style={{ ...classImg(c), marginTop: 'calc(-1 * env(safe-area-inset-top))' }}
+        >
           <div
             className="absolute inset-0"
             style={{

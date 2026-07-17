@@ -9,7 +9,10 @@ export default function SpaceDetail() {
   return (
     <div className="lw-fade pb-[120px]">
         {/* Hero */}
-        <div className="relative -mt-[50px] h-[330px]" style={spaceImg(s)}>
+        <div
+          className="relative h-[330px]"
+          style={{ ...spaceImg(s), marginTop: 'calc(-1 * env(safe-area-inset-top))' }}
+        >
           <div
             className="absolute inset-0"
             style={{

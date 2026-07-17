@@ -13,7 +13,10 @@ export default function Home() {
   return (
     <div className="lw-fade pb-[108px]">
       {/* Hero */}
-      <div className="relative -mt-[50px] h-[520px]" style={HERO}>
+      <div
+        className="relative h-[520px]"
+        style={{ ...HERO, marginTop: 'calc(-1 * env(safe-area-inset-top))' }}
+      >
         <div
           className="absolute inset-0"
           style={{
